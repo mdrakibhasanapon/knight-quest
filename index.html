@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knight Quest 2D - Retro Platformer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="header">
+            <div class="title-group">
+                <h1>KNIGHT QUEST 2D</h1>
+                <p><span class="badge-cc0">CC0 Public Domain</span> 100% Royalty-Free &amp; Open Source</p>
+            </div>
+            <div class="top-controls">
+                <button id="btn-sound" class="btn-icon" title="Toggle Sound">🔊 Sound</button>
+                <button id="btn-restart" class="btn-icon" title="Restart Game">🔄 Restart</button>
+                <button id="btn-fullscreen" class="btn-icon" title="Fullscreen">⛶ Fullscreen</button>
+            </div>
+        </header>
+
+        <main class="canvas-wrapper" id="canvasContainer">
+            <canvas id="gameCanvas"></canvas>
+        </main>
+
+        <section class="touch-controls">
+            <div class="d-pad">
+                <button id="btn-left" class="touch-btn" aria-label="Move Left">◀</button>
+                <button id="btn-right" class="touch-btn" aria-label="Move Right">▶</button>
+            </div>
+            <div class="action-pad">
+                <button id="btn-jump" class="touch-btn jump-btn" aria-label="Jump">JUMP ⬆</button>
+            </div>
+        </section>
+
+        <footer class="instructions-card">
+            <div>
+                <strong>Keyboard:</strong> <kbd>A</kbd> / <kbd>D</kbd> or <kbd>←</kbd> / <kbd>→</kbd> Move &nbsp;|&nbsp; <kbd>SPACE</kbd> / <kbd>W</kbd> / <kbd>↑</kbd> Jump
+            </div>
+            <div>
+                <strong>Objective:</strong> Leap across islands, avoid the deep water, gather gold coins, and reach the castle flag!
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/sprites.js"></script>
+    <script src="js/levels.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/game.js"></script>
+
+    <script>
+        // Additional UI hooks
+        document.getElementById('btn-sound').addEventListener('click', () => {
+            if (window.sounds) {
+                const isMuted = window.sounds.toggleMute();
+                document.getElementById('btn-sound').textContent = isMuted ? '🔇 Muted' : '🔊 Sound';
+            }
+        });
+
+        document.getElementById('btn-restart').addEventListener('click', () => {
+            if (window.gameInstance) {
+                window.gameInstance.startNewGame();
+            }
+        });
+
+        document.getElementById('btn-fullscreen').addEventListener('click', () => {
+            const container = document.getElementById('canvasContainer');
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => console.log(err));
+            } else {
+                document.exitFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>
